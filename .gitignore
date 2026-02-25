@@ -1,0 +1,16 @@
+# Gradle
+.gradle/
+local.properties
+
+# Android build outputs
+**/build/
+
+# Keep wrapper scripts/properties, ignore generated binary jar
+gradle/wrapper/gradle-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+
+# OS
+.DS_Store
