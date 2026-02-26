@@ -9,6 +9,51 @@ Aplicación Android para convertir el teléfono en una **fuente rápida de infor
 - Nivel de batería.
 - Estado de conectividad activa (internet validado).
 - Cantidad de sensores detectados y una muestra de ellos.
+- Top de procesos activos del teléfono (PID e importancia Android).
+
+## Consola de monitoreo desde tu computadora
+
+La app ahora puede enviar un **reporte JSON cada 15 segundos** a una URL de consola para que monitorees múltiples dispositivos desde una PC.
+
+1. En tu computadora, levanta un endpoint HTTP que reciba `POST /reportes`.
+2. En cada teléfono, abre la app y escribe la URL (por ejemplo `http://192.168.1.10:8080/reportes`).
+3. Pulsa **Iniciar monitoreo** para comenzar a publicar snapshots periódicos.
+4. La etiqueta **Estado consola** te indica si el envío fue exitoso o si hubo error.
+
+### Consola visual incluida (recomendada)
+
+También tienes una consola web lista en este repo:
+
+```bash
+python3 tools/console_server.py
+```
+
+Luego abre en tu computadora:
+
+- `http://localhost:8080` (dashboard visual).
+- y en la app Android usa `http://<IP_DE_TU_PC>:8080/reportes` como URL de consola.
+
+### Endpoint de prueba rápido (Python)
+
+```bash
+python3 - <<'PY'
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+class Handler(BaseHTTPRequestHandler):
+    def do_POST(self):
+        length = int(self.headers.get('content-length', 0))
+        body = self.rfile.read(length).decode('utf-8')
+        print("\\n--- REPORTE RECIBIDO ---")
+        print(body)
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b'OK')
+
+HTTPServer(('0.0.0.0', 8080), Handler).serve_forever()
+PY
+```
+
+> Si quieres consolidar varios dispositivos, puedes guardar estos JSON en una base de datos y mostrarlos en un dashboard web (Grafana, Kibana o una app web propia).
 
 ## Cómo generar un APK descargable
 
@@ -47,4 +92,5 @@ app/build/outputs/apk/debug/app-debug.apk
 
 1. Instala el APK en Android.
 2. Abre la app **Monitoreo Móvil**.
-3. Pulsa **Actualizar** para refrescar la captura de información.
+3. Escribe la URL de tu consola y pulsa **Iniciar monitoreo**.
+4. Puedes usar **Actualizar** para forzar un envío inmediato.

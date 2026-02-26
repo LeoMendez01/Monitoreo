@@ -15,6 +15,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/consoleUrlLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="URL de consola (ej. http://192.168.1.10:8080/reportes)"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleText">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/consoleUrlInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textUri"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <Button
         android:id="@+id/refreshButton"
         android:layout_width="wrap_content"
@@ -22,7 +40,28 @@
         android:layout_marginTop="12dp"
         android:text="Actualizar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleText" />
+        app:layout_constraintTop_toBottomOf="@id/consoleUrlLayout" />
+
+    <Button
+        android:id="@+id/toggleConsoleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="Iniciar monitoreo"
+        app:layout_constraintBottom_toBottomOf="@id/refreshButton"
+        app:layout_constraintStart_toEndOf="@id/refreshButton"
+        app:layout_constraintTop_toTopOf="@id/refreshButton" />
+
+    <TextView
+        android:id="@+id/consoleStatusText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Estado consola: monitoreo detenido"
+        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/refreshButton" />
 
     <ScrollView
         android:id="@+id/scrollContainer"
@@ -32,7 +71,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/refreshButton">
+        app:layout_constraintTop_toBottomOf="@id/consoleStatusText">
 
         <TextView
             android:id="@+id/infoText"
