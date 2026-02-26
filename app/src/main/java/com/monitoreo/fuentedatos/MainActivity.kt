@@ -1,6 +1,7 @@
 package com.monitoreo.fuentedatos
 
 import android.content.Context
+import android.app.ActivityManager
 import android.hardware.SensorManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -64,8 +65,36 @@ class MainActivity : AppCompatActivity() {
             sensors.take(8).forEachIndexed { index, sensor ->
                 appendLine("${index + 1}. ${sensor.name} (${sensor.vendor})")
             }
+
+            appendLine()
+            appendLine("Consola de procesos (dispositivos conectados):")
+            appendLine(getRunningProcessesReport())
         }
 
         binding.infoText.text = report
+    }
+
+    private fun getRunningProcessesReport(): String {
+        val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val processes = activityManager.runningAppProcesses.orEmpty()
+
+        if (processes.isEmpty()) {
+            return "No se detectaron procesos activos en este momento."
+        }
+
+        return buildString {
+            appendLine("Total de procesos detectados: ${processes.size}")
+            appendLine("Formato: nombre | PID | UID | importancia | paquetes")
+            appendLine("----------------------------------------------------")
+
+            processes.sortedBy { it.processName.lowercase(Locale.getDefault()) }
+                .forEach { process ->
+                    val packages = process.pkgList?.joinToString() ?: "N/D"
+                    appendLine(
+                        "${process.processName} | ${process.pid} | ${process.uid} | " +
+                            "${process.importance} | $packages"
+                    )
+                }
+        }
     }
 }

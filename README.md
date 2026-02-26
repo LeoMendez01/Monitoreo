@@ -9,6 +9,7 @@ Aplicación Android para convertir el teléfono en una **fuente rápida de infor
 - Nivel de batería.
 - Estado de conectividad activa (internet validado).
 - Cantidad de sensores detectados y una muestra de ellos.
+- Consola con procesos activos detectados (nombre, PID, UID, importancia y paquetes).
 
 ## Cómo generar un APK descargable
 
@@ -47,4 +48,4 @@ app/build/outputs/apk/debug/app-debug.apk
 
 1. Instala el APK en Android.
 2. Abre la app **Monitoreo Móvil**.
-3. Pulsa **Actualizar** para refrescar la captura de información.
+3. Pulsa **Actualizar** para refrescar la captura de información y la consola de procesos.
