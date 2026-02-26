@@ -20,6 +20,19 @@ La app ahora puede enviar un **reporte JSON cada 15 segundos** a una URL de cons
 3. Pulsa **Iniciar monitoreo** para comenzar a publicar snapshots periódicos.
 4. La etiqueta **Estado consola** te indica si el envío fue exitoso o si hubo error.
 
+### Consola visual incluida (recomendada)
+
+También tienes una consola web lista en este repo:
+
+```bash
+python3 tools/console_server.py
+```
+
+Luego abre en tu computadora:
+
+- `http://localhost:8080` (dashboard visual).
+- y en la app Android usa `http://<IP_DE_TU_PC>:8080/reportes` como URL de consola.
+
 ### Endpoint de prueba rápido (Python)
 
 ```bash
